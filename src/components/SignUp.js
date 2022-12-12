@@ -10,14 +10,13 @@ const SignUp = () => {
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const [photoURL, setPhotoURL] = useState('')
-  
   const navigate = useNavigate()
 
   const createAccount = async (e) => {
     e.preventDefault()
     const username_query = await query(
         collection(db, 'users'),
-        where('username', '==', userName)
+        where('userName', '==', userName)
       )
     
       const username_exists = await getDocs(username_query)
@@ -77,7 +76,7 @@ const SignUp = () => {
       </Form>
 
       <LoginContainer>
-        <p>인스타 계정이 있으세요? <span>Log in</span> </p>
+        <p>인스타 계정이 있으세요? <span onClick={() => navigate('/login')}>Log in</span> </p>
       </LoginContainer>
     </Main>
   </Container>
