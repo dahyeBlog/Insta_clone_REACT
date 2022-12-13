@@ -1,269 +1,66 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import {
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-} from "@mui/material";
 import { signOut } from "firebase/auth";
-import db, { auth } from "../firebase";
-import { useStateValue } from "../StateProvier";
+import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useStateValue } from "../StateProvier";
 
 const Navbar = () => {
   const [{ user }, dispatch] = useStateValue();
-  const [openMenu, setOpenMenu] = useState(false)
-  const [openDialog, setOpenDialog] = useState(false);
-  const [imageURL, setImageURL] = useState("");
-  const [caption, setCaption] = useState('')
+  console.log(user);
+
   const navigate = useNavigate();
 
   const logout = (e) => {
-    signOut(auth)
-      .then(() => {
-        localStorage.removeItem("user");
-        dispatch({
-          type: "SET_USER",
-          user: null,
-        });
-        navigate("/login");
-      })
-      .catch((err) => alert(err));
-  };
+    signOut(auth).then(() => {
+      localStorage.removeItem("user");
 
-  const createPost = (e) => {
-    e.preventDefault();
-    addDoc(collection(db, "post"), {
-      imageURL,
-      caption,
-      userName: user.userName,
-      photoURL: user.photoURL === null ? './user.png' : user.photoURL,
-      timeStamp: serverTimestamp(),
+      dispatch({ type: "SET_USER", user: null });
     });
-    alert('이미지가 등록되었습니다 👏👏👏👏')
-    setImageURL('')
-    setCaption('')
-    setOpenDialog(false)
+    navigate('login')
   };
 
   return (
-    <Container>
-      <Dialog
-        open={openDialog}
-        onClose={() => setOpenDialog(false)}
-        maxWidth="md"
-        fullWidth
-      >
-        <DialogTitle>Create a Post</DialogTitle>
-        <DialogContent>
-          <CreatePostForm>
-            <InputContainer>
-              <input
-                type="text"
-                placeholder="ImageURL"
-                value={imageURL}
-                onChange={(e) => setImageURL(e.target.value)}
-              />
-            </InputContainer>
-            <InputContainer>
-              <input
-                type="text"
-                placeholder="caption"
-                value={caption}
-                onChange={(e) => setCaption(e.target.value)}
-              />
-            </InputContainer>
-          </CreatePostForm>
-        </DialogContent>
-
-        <DialogActions>
-          <PostCTAButtons>
-            <button onClick={() => setOpenDialog(false)}>Cancel</button>
-            <button onClick={createPost}>Post</button>
-          </PostCTAButtons>
-        </DialogActions>
-      </Dialog>
-
-      <Logo>
-        <img src="./logo.png" alt="" />
-      </Logo>
-      <SearchBar>
-        <input type="text" placeholder="Search ..." />
-      </SearchBar>
-
-      <Icons>
-        <Icon>
-          <img src="./41-home.svg" alt="" />
-        </Icon>
-        <Icon>
-          <img
-            src="./40-add-card.svg"
-            alt=""
-            onClick={() => setOpenDialog(true)}
-          />
-        </Icon>
-        <Icon>
-          <img src="./47-chat (1).svg" alt="" />
-        </Icon>
-        <Icon>
-          <img
-            src={user.photoURL === null ? "./user.png" : user.photoURL}
-            alt=""
-            onClick={() => setOpenMenu(!openMenu)}
-          /> 
-           <Menu openMenu={openMenu}>
-            <MenuElement onClick={() => navigate("/profile")}>
-              Profile
-            </MenuElement>
-            <MenuElement onClick={logout}>Logout</MenuElement>
-          </Menu>
-        </Icon>
-      </Icons>
-    </Container>
+    <NavContainer>
+      <NavHeaderWrapper>
+        <img src="./instagram-text-logo.png" alt="logo" />
+        <NavHeaderButton>
+          <button>LogIn</button>
+          <button>SignUp</button>
+          <button onClick={logout}>LogOut</button>
+        </NavHeaderButton>
+      </NavHeaderWrapper>
+    </NavContainer>
   );
 };
 
-const Container = styled.div`
-  height: 60px;
-  padding-top: 5px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-evenly;
-  border-bottom: 1px solid lightgray;
-  background-color: #fff;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 100;
-  @media only screen and (max-width: 768px) {
-    justify-content: space-around;
-  }
-`;
-
-const CreatePostForm = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding-top: 20px;
-  align-items: center;
-  height: 300px;
-`;
-
-const Logo = styled.div`
-  cursor: pointer;
-  width: 180px;
-  img {
-    width: 100%;
-  }
-`;
-
-const SearchBar = styled.div`
-  height: 30px;
-  width: 268px;
-  padding: 3px 16px 3px 16px;
-  min-height: auto;
-  min-width: auto;
-  background-color: #efefef;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  input {
-    background-color: transparent;
-    border: none;
-    outline: none;
-    line-height: 18px;
-    font-size: 14px;
-    width: 90%;
-  }
-  @media only screen and (max-width: 768px) {
-    display: none;
-  }
-`;
-
-const Icons = styled.div`
-  display: flex;
-  align-items: center;
-  width: 180px;
-  justify-content: space-evenly;
-  height: 40px;
-`;
-
-const Icon = styled.div`
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  img {
-    width: 25px;
-    height: 25px;
-  }
-  &:nth-child(4) {
-    img {
-      border-radius: 50%;
-    }
-    position: relative;
-  }
-`;
-
-const Menu = styled.div`
-  position: relative;
-  bottom: -8px;
-  display: ${(props) => (props.openMenu ? "block" : "none")};
+const NavContainer = styled.div`
   background: #fff;
-  width: 100px;
-  border: 1px solid lightgray;
-  border-radius: 5px;
+  height: 54px;
+  width: 100vw;
+  position: fixed;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
-
-const MenuElement = styled.div`
-  height: 20px;
-  color: gray;
-  border-bottom: 1px solid lightgray;
-  padding: 10px;
-  &:hover {
-    background-color: #e4e4e4;
+const NavHeaderWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  img {
+    height: 50px;
   }
 `;
-
-const InputContainer = styled.div`
-  width: 90%;
-  height: 33px;
-  margin-bottom: 20px;
-  input {
-    width: 100%;
-    height: 100%;
-    border: 1px solid lightgrey;
-    padding: 5px;
-    outline: none;
-  }
-  textarea {
-    width: 100%;
-    height: 200px;
-    resize: none;
-    border: 1px solid lightgrey;
-    padding: 5px;
-    outline: none;
-  }
-`;
-
-const PostCTAButtons = styled.div`
+const NavHeaderButton = styled.div`
   button {
-    width: 100px;
-    height: 33px;
-    margin-right: 10px;
+    margin-left: 1rem;
     cursor: pointer;
-    border: none;
-    outline: none;
-    color: #fff;
-    border-radius: 5px;
-  }
-  .cancel-button {
-    background-color: red;
-  }
-  .post-button {
-    background-color: #026aab;
+    font-size: 14px;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #0095f6;
+    background: #fff;
+    padding: 0.5rem;
   }
 `;
 
