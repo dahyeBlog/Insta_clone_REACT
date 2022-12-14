@@ -1,15 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import styled from "styled-components";
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase";
+import db, { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import { useStateValue } from "../StateProvier";
-
+import PostImgModal from "../UI/PostImgModal";
+import { Link } from "react-router-dom";
 const Navbar = () => {
   const [{ user }, dispatch] = useStateValue();
-  console.log(user);
+  const [modalOpen, setModalOpen] = useState(false)
 
   const navigate = useNavigate();
+  
+  const showModal = () => {
+    setModalOpen(true)
+  }
+
 
   const logout = (e) => {
     signOut(auth).then(() => {
@@ -17,51 +23,119 @@ const Navbar = () => {
 
       dispatch({ type: "SET_USER", user: null });
     });
-    navigate('login')
+    navigate("login");
   };
 
   return (
+    <>
+    {modalOpen && <PostImgModal setModalOpen={setModalOpen} />}
     <NavContainer>
-      <NavHeaderWrapper>
+      <Link to={'/'}>
+      <Logo>
         <img src="./instagram-text-logo.png" alt="logo" />
-        <NavHeaderButton>
-          <button>LogIn</button>
-          <button>SignUp</button>
-          <button onClick={logout}>LogOut</button>
-        </NavHeaderButton>
-      </NavHeaderWrapper>
+      </Logo>
+      </Link>
+      
+      <Icons>
+        <Icon>
+          <img src="./home.svg" alt="" />
+        </Icon>
+        <Icon>
+          <img src="./card.svg" onClick={showModal} alt="" />
+        </Icon>
+        <Icon>
+          <img src="./chat.svg" alt="" />
+        </Icon>
+        <Icon>
+          <img src={user.photoURL === null ?  "./user.png" : user.photoURL} alt="" />
+        </Icon>
+      </Icons>
+
+      <Menu>
+        <MenuElement onClick={()=>navigate('/profile')}>
+          Profile
+        </MenuElement>
+        <MenuElement onClick={logout}>
+          Logout
+        </MenuElement>
+      </Menu>
     </NavContainer>
+  </>
   );
 };
 
 const NavContainer = styled.div`
-  background: #fff;
-  height: 54px;
-  width: 100vw;
+  height: 60px;
+  padding-top: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+
+  border-bottom: 1px solid lightgray;
+  background-color: #fff;
   position: fixed;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-`;
-const NavHeaderWrapper = styled.div`
+  top: 0;
   width: 100%;
-  height: 100%;
+  z-index: 100;
+  @media only screen and (max-width: 768px) {
+    justify-content: space-around;
+  }
+`;
+
+const Logo = styled.div`
+  cursor: pointer;
+  img {
+    width: 120px;
+  }
+`;
+const Icons = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  width: 200px;
+  justify-content: space-evenly;
+  height: 40px;
+`;
+
+const Icon = styled.div`
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
   img {
-    height: 50px;
+    width: 25px;
+    height: 25px;
+  }
+
+  &:nth-child(4) {
+  img {
+    border-radius: 50%;
+    border: 1px solid #eee;
+  }
+  position: relative;
   }
 `;
-const NavHeaderButton = styled.div`
-  button {
-    margin-left: 1rem;
+
+
+const Menu = styled.div`
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+background: #fff;
+`
+const MenuElement = styled.div`
+color: #000;
+/* border: 1px solid #eee; */
+padding:10px;
+&:nth-child(1) {
+  border-right: 1px solid #eee;
+}
+&:hover {
+    background-color: #e4e4e4;
     cursor: pointer;
-    font-size: 14px;
-    border: 1px solid transparent;
-    border-radius: 3px;
-    color: #0095f6;
-    background: #fff;
-    padding: 0.5rem;
+
   }
-`;
+`
+
 
 export default Navbar;
