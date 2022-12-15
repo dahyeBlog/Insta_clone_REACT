@@ -13,7 +13,7 @@ const Profile = () => {
     const fetchPosts = async () => {
       const q = query(
         collection(db, "posts"),
-        where("userName", "==", user.userName)
+        where("userName", "==", user?.userName)
       );
 
       const querySnapshot = await getDocs(q);
@@ -30,7 +30,7 @@ const Profile = () => {
         <UserProfile>
           <div className="user-image">
             <img
-              src={user.photoURL === null ? "./user.png" : user.photoURL}
+              src={user?.photoURL === null ? "./user.png" : user?.photoURL}
               alt=""
             />
           </div>
