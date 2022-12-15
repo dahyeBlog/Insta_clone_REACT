@@ -9,6 +9,7 @@ const Profile = () => {
   const [{user}] = useStateValue()
   const [allPost, setAllPost] = useState([])
 
+  
   useEffect(() => {
     const fetchPosts = async () => {
       const q = query(
