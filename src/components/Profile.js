@@ -35,7 +35,7 @@ const Profile = () => {
             />
           </div>
 
-          <h2>{user.userName}</h2>
+          <h2>{user?.userName}</h2>
         </UserProfile>
 
         <PostContainer>

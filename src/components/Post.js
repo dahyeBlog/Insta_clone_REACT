@@ -72,8 +72,8 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
     }
 
     setLikeState({
-      like: docSnap.data()?.likes.length ? docSnap.data()?.likes.length : 0,
-      likeActive: docSnap.data()?.likes.includes(user.userName) ? true : false,
+      like: docSnap.data()?.likes?.length ? docSnap.data()?.likes?.length : 0,
+      likeActive: docSnap.data()?.likes?.includes(user?.userName) ? true : false,
     });
   };
 
