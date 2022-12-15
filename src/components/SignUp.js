@@ -12,10 +12,10 @@ import {
 } from "firebase/firestore";
 import { useNavigate } from "react-router-dom";
 import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from '@mui/icons-material/Lock';
-import PersonIcon from '@mui/icons-material/Person';
-import PhoneIcon from '@mui/icons-material/Phone';
-import PhotoIcon from '@mui/icons-material/Photo';
+import LockIcon from "@mui/icons-material/Lock";
+import PersonIcon from "@mui/icons-material/Person";
+import PhoneIcon from "@mui/icons-material/Phone";
+import PhotoIcon from "@mui/icons-material/Photo";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -23,39 +23,34 @@ const SignUp = () => {
   const [userName, setUserName] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
-  const [photoURL, setPhotoURL] = useState('')
+  const [photoURL, setPhotoURL] = useState("");
 
   const navigate = useNavigate();
 
-  
-
   const emailHandler = (e) => {
-    const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/
-    if(regex.test(e.target.value) === true) {
+    const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+    if (regex.test(e.target.value) === true) {
       setEmail(e.target.value);
     } else {
       setEmail(e.target.value);
-      setError('이메일 형식에 맞게 입력하세요.')
-      setTimeout(() => {
-        setError("");
-      }, 3000);
-    }      
-  }
-
-
-  const phoneHandler = (e) => {
-    const regex = /^[0-9\b -]{0,13}$/;
-    if (regex.test(e.target.value)) {      
-      setPhone(e.target.value);
-    } else {
-      setError('전화번호를 숫자로 입력해주세요.');
+      setError("이메일 형식에 맞게 입력하세요.");
       setTimeout(() => {
         setError("");
       }, 3000);
     }
-  }
+  };
 
-
+  const phoneHandler = (e) => {
+    const regex = /^[0-9\b -]{0,13}$/;
+    if (regex.test(e.target.value)) {
+      setPhone(e.target.value);
+    } else {
+      setError("전화번호를 숫자로 입력해주세요.");
+      setTimeout(() => {
+        setError("");
+      }, 3000);
+    }
+  };
 
   const signupHandler = async (e) => {
     e.preventDefault();
@@ -79,17 +74,17 @@ const SignUp = () => {
 
             updateProfile(userCredential.user, {
               displayName: userName,
-              photoURL: photoURL
+              photoURL: photoURL,
             });
 
             await setDoc(doc(db, "users", userCredential.user.uid), {
               email,
               userName,
               phone,
-              photoURL
+              photoURL,
             });
 
-            setEmail("")
+            setEmail("");
             setPassword("");
             setPhotoURL("");
             setUserName("");
@@ -119,8 +114,7 @@ const SignUp = () => {
         setError("");
       }, 3000);
     }
-  }
-  
+  };
 
   return (
     <SignupContainer>
@@ -139,7 +133,7 @@ const SignUp = () => {
             />
           </div>
           <div className="inputAlign">
-          <LockIcon className="icon" />
+            <LockIcon className="icon" />
             <input
               type="password"
               maxLength="10"
@@ -149,7 +143,7 @@ const SignUp = () => {
             />
           </div>
           <div className="inputAlign">
-          <PersonIcon className="icon" />
+            <PersonIcon className="icon" />
             <input
               type="text"
               maxLength="20"
@@ -160,7 +154,7 @@ const SignUp = () => {
           </div>
 
           <div className="inputAlign">
-          <PhoneIcon className="icon" />
+            <PhoneIcon className="icon" />
             <input
               type="tel"
               maxLength="10"
@@ -171,7 +165,7 @@ const SignUp = () => {
           </div>
 
           <div className="inputAlign">
-          <PhotoIcon className="icon" />
+            <PhotoIcon className="icon" />
             <input
               type="test"
               placeholder="프로필를 입력하세요.(선택사항)"
@@ -265,7 +259,6 @@ const SignupForm = styled.form`
     color: #d8d9cf;
     /* margin-right: 5px; */
     font-size: 16px;
-
   }
 `;
 const SignupButton = styled.button`
@@ -295,7 +288,6 @@ const LoginContainer = styled.div`
       font-weight: 500;
       cursor: pointer;
       padding-left: 10px;
-
     }
   }
 `;

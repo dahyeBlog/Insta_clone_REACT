@@ -1,5 +1,4 @@
 {
-  "homepage": "https://dahyeBlog.github.io/Insta_clone_REACT/",
   "name": "clone-instagram",
   "version": "0.1.0",
   "private": true,
@@ -23,13 +22,12 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "deploy": "gh-pages -d build",
-    "predeploy": "npm run build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+
   "eslintConfig": {
     "extends": [
       "react-app",

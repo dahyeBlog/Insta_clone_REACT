@@ -1,10 +1,9 @@
 import React from "react";
 import styled from "styled-components";
 
-const CommentModal = ({setOpenCommentModal,commentsOnPost}) => {
-
+const CommentModal = ({ setOpenCommentModal, commentsOnPost }) => {
   const closeModal = () => {
-    setOpenCommentModal(false)
+    setOpenCommentModal(false);
   };
 
   return (
@@ -25,12 +24,11 @@ const CommentModal = ({setOpenCommentModal,commentsOnPost}) => {
       </AllCommentContainer>
 
       <PostButton>
-      <button className="close-button" onClick={closeModal}>
-        확인
-      </button>
+        <button className="close-button" onClick={closeModal}>
+          확인
+        </button>
       </PostButton>
     </CreatePostForm>
-          
   );
 };
 
@@ -48,9 +46,9 @@ const CreatePostForm = styled.form`
   background-color: #eee;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-   
+
   h2 {
-  margin: 20px;
+    margin: 20px;
   }
 `;
 
@@ -70,7 +68,7 @@ const AllCommentContainer = styled.div`
       }
     }
 
-    .user-comment{
+    .user-comment {
       display: flex;
       font-size: 13px;
       strong {
@@ -78,7 +76,7 @@ const AllCommentContainer = styled.div`
       }
     }
   }
-`
+`;
 
 const PostButton = styled.div`
   position: absolute;
@@ -87,16 +85,16 @@ const PostButton = styled.div`
     width: 100px;
     height: 33px;
     margin-right: 10px;
-    margin-bottom:10px;
+    margin-bottom: 10px;
     border: none;
     outline: none;
     border-radius: 5px;
     cursor: pointer;
     color: #fff;
   }
-    .close-button{
-      background-color: #34B3F1;
-    }
-`
+  .close-button {
+    background-color: #34b3f1;
+  }
+`;
 
 export default CommentModal;

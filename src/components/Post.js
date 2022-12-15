@@ -1,5 +1,15 @@
-import React, { useState , useEffect} from "react";
-import { serverTimestamp, doc, addDoc, collection, query, orderBy, onSnapshot, setDoc, getDoc } from "firebase/firestore";
+import React, { useState, useEffect } from "react";
+import {
+  serverTimestamp,
+  doc,
+  addDoc,
+  collection,
+  query,
+  orderBy,
+  onSnapshot,
+  setDoc,
+  getDoc,
+} from "firebase/firestore";
 import db from "../firebase";
 import styled from "styled-components";
 import { useStateValue } from "../StateProvier";
@@ -12,47 +22,45 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
   const [openCommentModal, setOpenCommentModal] = useState(false);
 
   const [likesOnPost, setLikesOnPost] = useState({
-    likes:[]
-  })
+    likes: [],
+  });
 
   const [likeState, setLikeState] = useState({
     like: likesOnPost?.likes.length > 0 ? likesOnPost?.likes.length : 0,
     likeActive: false,
   });
 
-  const [commentsOnPost, setCommentsOnPost] = useState([])
+  const [commentsOnPost, setCommentsOnPost] = useState([]);
   const [commentInput, setCommentInput] = useState("");
 
   const handleLike = async (e) => {
-    e.preventDefault()
-    if(likesOnPost?.likes.includes(user?.userName)) {
+    e.preventDefault();
+    if (likesOnPost?.likes.includes(user?.userName)) {
       //dislike part
       const likePayload = {
         likes: likesOnPost?.likes.filter((likedUser) => {
-          return likedUser !== user?.userName
-        })
-      }
-      await setDoc(doc(db, 'likes', postId), likePayload)
+          return likedUser !== user?.userName;
+        }),
+      };
+      await setDoc(doc(db, "likes", postId), likePayload);
       setLikesOnPost({
-        likes: likePayload.likes
-      })
-
+        likes: likePayload.likes,
+      });
     } else {
       //like part
       const likePayload = {
-        likes: [...likesOnPost.likes, user?.userName]
-      }
+        likes: [...likesOnPost.likes, user?.userName],
+      };
 
-      setLikesOnPost(likePayload)
-      
-      await setDoc(doc(db, 'likes', postId), likePayload)
-      
+      setLikesOnPost(likePayload);
+
+      await setDoc(doc(db, "likes", postId), likePayload);
+
       setLikesOnPost({
-        likes: likePayload.likes
-      })
+        likes: likePayload.likes,
+      });
     }
-    
-  }
+  };
 
   const getLikes = async () => {
     const docRef = doc(db, "likes", postId);
@@ -62,18 +70,17 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
     if (docSnap.exists()) {
       setLikesOnPost(docSnap.data());
     }
-        
+
     setLikeState({
       like: docSnap.data()?.likes.length ? docSnap.data()?.likes.length : 0,
-      likeActive: docSnap.data()?.likes.includes(user.userName) ? true : false
+      likeActive: docSnap.data()?.likes.includes(user.userName) ? true : false,
     });
   };
-  
+
   useEffect(() => {
     getLikes();
   }, [likeState]);
 
-  
   const handleComment = async (e) => {
     e.preventDefault();
 
@@ -85,7 +92,7 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
         timeStamp: serverTimestamp(),
       };
 
-       const docRef = doc(db, "comments", postId);
+      const docRef = doc(db, "comments", postId);
 
       addDoc(collection(docRef, "list"), payload);
 
@@ -93,31 +100,32 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
     } else {
       alert("댓글을 입력하세요.");
     }
-  }
-
+  };
 
   const getComments = async () => {
     const q = query(
-        collection(db, "comments", postId,"list"),
-        orderBy('timeStamp', 'desc')
-      )
-      onSnapshot(q, (snapshot) => {
-        
-        setCommentsOnPost(snapshot.docs);
-      })
-      
-  }
+      collection(db, "comments", postId, "list"),
+      orderBy("timeStamp", "desc")
+    );
+    onSnapshot(q, (snapshot) => {
+      setCommentsOnPost(snapshot.docs);
+    });
+  };
 
   useEffect(() => {
-    getComments()
-  }, [])
-
+    getComments();
+  }, []);
 
   return (
     <Container>
       {openCommentModal ? (
-        <CommentModal setOpenCommentModal={setOpenCommentModal} commentsOnPost={commentsOnPost} />
-      ) : ''}
+        <CommentModal
+          setOpenCommentModal={setOpenCommentModal}
+          commentsOnPost={commentsOnPost}
+        />
+      ) : (
+        ""
+      )}
       <UserInfo>
         <img src={photoURL} alt="" />
         <p>{userName}</p>
@@ -128,7 +136,11 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
 
       <PostCTA>
         <CTAButtons>
-          {likeState.likeActive ? (<img src="./heart (1).png" alt="" onClick={handleLike} />) : (<img src="./heart.png" alt="" onClick={handleLike} />)}
+          {likeState.likeActive ? (
+            <img src="./heart (1).png" alt="" onClick={handleLike} />
+          ) : (
+            <img src="./heart.png" alt="" onClick={handleLike} />
+          )}
           <img
             onClick={() => setOpenCommentModal(true)}
             src="./chat 1.png"
@@ -167,7 +179,9 @@ const Post = ({ userName, photoURL, caption, imageURL, postId }) => {
             onChange={(e) => setCommentInput(e.target.value)}
             value={commentInput}
           />
-          <button type="submit" onClick={handleComment}>등록</button>
+          <button type="submit" onClick={handleComment}>
+            등록
+          </button>
         </CommentInput>
       </PostCTA>
     </Container>

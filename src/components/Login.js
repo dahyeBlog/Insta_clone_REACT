@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import {signInWithEmailAndPassword} from 'firebase/auth'
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import EmailIcon from "@mui/icons-material/Email";
-import LockIcon from '@mui/icons-material/Lock';
+import LockIcon from "@mui/icons-material/Lock";
 import { useStateValue } from "../StateProvier";
 
 const Login = () => {
@@ -16,41 +16,41 @@ const Login = () => {
   const navigate = useNavigate();
 
   const emailHandler = (e) => {
-    const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/
-    if(regex.test(e.target.value) === true) {
+    const regex = /[a-z0-9]+@[a-z]+\.[a-z]{2,3}/;
+    if (regex.test(e.target.value) === true) {
       setEmail(e.target.value);
     } else {
       setEmail(e.target.value);
-      setError('이메일 형식에 맞게 입력하세요.')
+      setError("이메일 형식에 맞게 입력하세요.");
       setTimeout(() => {
         setError("");
       }, 3000);
-    }      
-  }
-
+    }
+  };
 
   const loginHandler = async (e) => {
     e.preventDefault();
-    
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
-      console.log(userCredential.user);
-      const newUser = {
-        userName: userCredential.user.displayName,
-        photoURL: userCredential.user.photoURL,
-        email: userCredential.user.email,
-        uid: userCredential.user.uid
-      }
 
-      dispatch({
-        type: 'SET_USER',
-        user: newUser
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log(userCredential.user);
+        const newUser = {
+          userName: userCredential.user.displayName,
+          photoURL: userCredential.user.photoURL,
+          email: userCredential.user.email,
+          uid: userCredential.user.uid,
+        };
+
+        dispatch({
+          type: "SET_USER",
+          user: newUser,
+        });
+
+        localStorage.setItem("user", JSON.stringify(newUser));
+        navigate("/");
       })
-
-      localStorage.setItem('user', JSON.stringify(newUser))
-      navigate('/')
-    }).catch((err) => alert(err))
-    
-  }
+      .catch((err) => alert(err));
+  };
   return (
     <LoginContainer>
       <LoginWrapper>
@@ -68,7 +68,7 @@ const Login = () => {
             />
           </div>
           <div className="inputAlign">
-          <LockIcon className="icon" />
+            <LockIcon className="icon" />
             <input
               type="password"
               maxLength="10"
@@ -77,8 +77,10 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
-      
-          <LoginButton type="submit" onClick={loginHandler}>로그인</LoginButton>
+
+          <LoginButton type="submit" onClick={loginHandler}>
+            로그인
+          </LoginButton>
           {error && <div className="error">{error}</div>}
         </LoginForm>
         <SignContainer>
@@ -162,7 +164,6 @@ const LoginForm = styled.form`
     color: #d8d9cf;
     /* margin-right: 5px; */
     font-size: 16px;
-
   }
 `;
 const LoginButton = styled.button`
@@ -192,8 +193,7 @@ const SignContainer = styled.div`
       font-weight: 500;
       cursor: pointer;
       padding-left: 10px;
-
     }
   }
 `;
-export default Login
+export default Login;

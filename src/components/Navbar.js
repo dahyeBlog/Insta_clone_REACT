@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { signOut } from "firebase/auth";
 import db, { auth } from "../firebase";
@@ -8,14 +8,13 @@ import PostImgModal from "../UI/PostImgModal";
 import { Link } from "react-router-dom";
 const Navbar = () => {
   const [{ user }, dispatch] = useStateValue();
-  const [modalOpen, setModalOpen] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
 
   const navigate = useNavigate();
-  
-  const showModal = () => {
-    setModalOpen(true)
-  }
 
+  const showModal = () => {
+    setModalOpen(true);
+  };
 
   const logout = (e) => {
     signOut(auth).then(() => {
@@ -28,41 +27,42 @@ const Navbar = () => {
 
   return (
     <>
-    {modalOpen && <PostImgModal setModalOpen={setModalOpen} />}
-    <NavContainer>
-      <Link to={'/'}>
-      <Logo>
-        <img src="./instagram-text-logo.png" alt="logo" />
-      </Logo>
-      </Link>
-      
-      <Icons>
-       <Link to={'/'}>
-        <Icon>
-          <img src="./home.svg" alt="" />
-        </Icon>
+      {modalOpen && <PostImgModal setModalOpen={setModalOpen} />}
+      <NavContainer>
+        <Link to={"/"}>
+          <Logo>
+            <img src="./instagram-text-logo.png" alt="logo" />
+          </Logo>
         </Link>
-        <Icon>
-          <img src="./card.svg" onClick={showModal} alt="" />
-        </Icon>
-        <Icon>
-          <img src="./chat.svg" alt="" />
-        </Icon>
-        <Icon>
-          <img src={user.photoURL === null ?  "./user.png" : user.photoURL} alt="" />
-        </Icon>
-      </Icons>
 
-      <Menu>
-        <MenuElement onClick={()=>navigate('/profile')}>
-          Profile
-        </MenuElement>
-        <MenuElement onClick={logout}>
-          Logout
-        </MenuElement>
-      </Menu>
-    </NavContainer>
-  </>
+        <Icons>
+          <Link to={"/"}>
+            <Icon>
+              <img src="./home.svg" alt="" />
+            </Icon>
+          </Link>
+          <Icon>
+            <img src="./card.svg" onClick={showModal} alt="" />
+          </Icon>
+          <Icon>
+            <img src="./chat.svg" alt="" />
+          </Icon>
+          <Icon>
+            <img
+              src={user.photoURL === null ? "./user.png" : user.photoURL}
+              alt=""
+            />
+          </Icon>
+        </Icons>
+
+        <Menu>
+          <MenuElement onClick={() => navigate("/profile")}>
+            Profile
+          </MenuElement>
+          <MenuElement onClick={logout}>Logout</MenuElement>
+        </Menu>
+      </NavContainer>
+    </>
   );
 };
 
@@ -109,35 +109,32 @@ const Icon = styled.div`
   }
 
   &:nth-child(4) {
-  img {
-    border-radius: 50%;
-    border: 1px solid #eee;
-  }
-  position: relative;
+    img {
+      border-radius: 50%;
+      border: 1px solid #eee;
+    }
+    position: relative;
   }
 `;
 
-
 const Menu = styled.div`
-position: relative;
-display: flex;
-align-items: center;
-justify-content: center;
-background: #fff;
-`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+`;
 const MenuElement = styled.div`
-color: #000;
-/* border: 1px solid #eee; */
-padding:10px;
-&:nth-child(1) {
-  border-right: 1px solid #eee;
-}
-&:hover {
+  color: #000;
+  /* border: 1px solid #eee; */
+  padding: 10px;
+  &:nth-child(1) {
+    border-right: 1px solid #eee;
+  }
+  &:hover {
     background-color: #e4e4e4;
     cursor: pointer;
-
   }
-`
-
+`;
 
 export default Navbar;
