@@ -37,9 +37,11 @@ const Navbar = () => {
       </Link>
       
       <Icons>
+       <Link to={'/'}>
         <Icon>
           <img src="./home.svg" alt="" />
         </Icon>
+        </Link>
         <Icon>
           <img src="./card.svg" onClick={showModal} alt="" />
         </Icon>

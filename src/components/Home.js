@@ -19,6 +19,7 @@ const Home = () => {
     fetchPost()
   }, [])
 
+  
   return (
     <Container>
       <Navbar />

@@ -63,7 +63,7 @@ const PostImgModal = ({ setModalOpen }) => {
 };
 
 const CreatePostForm = styled.form`
-  width: 80%;
+  width: 50%;
   height: 50%;
   top: 50%;
   left: 50%;
