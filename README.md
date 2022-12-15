@@ -7,6 +7,7 @@
 - npm install @mui/material @emotion/react @emotion/styled
 
 ## 폴더 상세설명 
+```bash
 src
  ┣ UI
  ┃ ┣ CommentModal.js
@@ -24,7 +25,7 @@ src
  ┣ index.css
  ┣ index.js
  ┗ reducer.js
-
+```
 ## Home.js
 - 업로드한 포스트를 데이터베이스에서 가져오는 기능수행
 - 포스트한 데이터를 가져와 Post.js에 전달함
