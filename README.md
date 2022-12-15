@@ -7,17 +7,23 @@
 - npm install @mui/material @emotion/react @emotion/styled
 
 ## 폴더 상세설명 
- -components
-  --Home.js
-  --Login.js
-  --SignUp.js
-  --Navbar.js
-  --Profile.js
-  --Post.js
-
- -UI
-  --PostImgModal.js 
-  --CommentModal.js
+📦src
+ ┣ 📂UI
+ ┃ ┣ 📜CommentModal.js
+ ┃ ┗ 📜PostImgModal.js
+ ┣ 📂components
+ ┃ ┣ 📜Home.js
+ ┃ ┣ 📜Login.js
+ ┃ ┣ 📜Navbar.js
+ ┃ ┣ 📜Post.js
+ ┃ ┣ 📜Profile.js
+ ┃ ┗ 📜SignUp.js
+ ┣ 📜App.js
+ ┣ 📜StateProvier.js
+ ┣ 📜firebase.js
+ ┣ 📜index.css
+ ┣ 📜index.js
+ ┗ 📜reducer.js
 
 ## Home.js
 - 업로드한 포스트를 데이터베이스에서 가져오는 기능수행
