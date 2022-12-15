@@ -60,7 +60,5 @@ src
 
 
 ## 배운 내용
-- .env 파일에 있는 api key를 읽어오지 못하는 문제가 생겼다. (git 에는 .env파일을 .gitignore로 설정했기 때문임. 파일이 없어서 key를 읽어 오지 못함.)
-- 해결방법
-- Netlify 에서 환경변수를 key-Value 형태로 등록하고 사용할 수 있도록 제공함.
-
+- firebase의 사용량을 초과하는 바람에 프로젝트를 다시 생성하고 오류를 잡았다. 잊고 있었는데 다시한번 상기 시킬 수 있었다.
+- PERMISSION_DENIED: Missing or insufficient permissions 이라는 오류가 계속 뜨는 바람에 계속 찾아 보다가 해결방법을 찾아 규칙을 수정 했지만 (allow read, write:  if request.auth != null;) 보안 규칙에 취약하기 때문에 프로덕트 환경에서 쓸 수 있는 해결방법은 아니다라는 것을 알게 되었다. 

@@ -119,7 +119,8 @@ const SignUp = () => {
         setError("");
       }, 3000);
     }
-  };
+  }
+  
 
   return (
     <SignupContainer>
