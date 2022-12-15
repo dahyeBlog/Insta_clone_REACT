@@ -49,7 +49,7 @@ const Navbar = () => {
           </Icon>
           <Icon>
             <img
-              src={user.photoURL === null ? "./user.png" : user.photoURL}
+              src={user.photoURL === "" ? "./user.png" : user.photoURL}
               alt=""
             />
           </Icon>
