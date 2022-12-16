@@ -13,7 +13,7 @@ const Profile = () => {
     const fetchPosts = async () => {
       const q = query(
         collection(db, "posts"),
-        where("userName", "==", user?.userName)
+        where("userName", "==", user.userName)
       );
 
       const querySnapshot = await getDocs(q);

@@ -22,7 +22,7 @@ const Navbar = () => {
 
       dispatch({ type: "SET_USER", user: null });
     });
-    navigate("login");
+    navigate("/login");
   };
 
   return (
