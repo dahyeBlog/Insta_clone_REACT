@@ -100,7 +100,6 @@ const LoginContainer = styled.div`
   flex-direction: column;
   align-items: center;
   margin-top: 7rem;
-  /* justify-content: center; */
 `;
 const LoginWrapper = styled.div`
   width: 400px;
@@ -142,16 +141,11 @@ const LoginForm = styled.form`
     z-index: -1;
     font-size: 14px;
     -webkit-appearance: none;
-    /* padding: 10px 15px;
-    line-height: 10px;
-    outline: none;
-    border-radius: 3px; */
   }
   input:focus {
     width: 250px;
     border: none;
     outline: none;
-    /* border: 1px solid gainsboro; */
   }
 
   .error {
@@ -162,7 +156,6 @@ const LoginForm = styled.form`
 
   .icon {
     color: #d8d9cf;
-    /* margin-right: 5px; */
     font-size: 16px;
   }
 `;

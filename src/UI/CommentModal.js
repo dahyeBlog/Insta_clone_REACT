@@ -7,7 +7,7 @@ const CommentModal = ({ setOpenCommentModal, commentsOnPost }) => {
   };
 
   return (
-    <CreatePostForm onSubmit={() => {}}>
+    <CreatePostForm>
       <h2>모든 댓글보기</h2>
       <AllCommentContainer>
         {commentsOnPost.map((comment) => (

@@ -70,7 +70,6 @@ const SignUp = () => {
       ) {
         createUserWithEmailAndPassword(auth, email, password)
           .then(async (userCredential) => {
-            // console.log(userCredential.user);
 
             updateProfile(userCredential.user, {
               displayName: userName,
@@ -189,13 +188,11 @@ const SignUp = () => {
 };
 const SignupContainer = styled.div`
   height: calc(100vh-7rem);
-  /* height: 100vh; */
   width: 100vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-top: 7rem;
-  /* justify-content: center; */
 `;
 const SignupWrapper = styled.div`
   width: 400px;
@@ -237,16 +234,11 @@ const SignupForm = styled.form`
     z-index: -1;
     font-size: 14px;
     -webkit-appearance: none;
-    /* padding: 10px 15px;
-    line-height: 10px;
-    outline: none;
-    border-radius: 3px; */
   }
   input:focus {
     width: 250px;
     border: none;
     outline: none;
-    /* border: 1px solid gainsboro; */
   }
 
   .error {
